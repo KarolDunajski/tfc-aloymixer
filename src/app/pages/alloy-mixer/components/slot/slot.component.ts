@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
-import * as _ from 'lodash';
+import { chain } from 'lodash';
 
 enum OreUnitEnum {
   Small = 10,
@@ -34,7 +34,7 @@ export class SlotComponent implements ControlValueAccessor, OnInit, OnDestroy {
   onTouch: any = () => {};
   val: number;
 
-  options: { name: string; value: number }[] = _(OreUnitEnum)
+  options: { name: string; value: number }[] = chain(OreUnitEnum)
     .keys()
     .filter((key) => isNaN(key as any))
     .map((key) => {

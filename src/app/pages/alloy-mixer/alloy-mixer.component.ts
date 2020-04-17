@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
-import * as _ from 'lodash';
+import { chain, round, sumBy } from 'lodash';
 
 const ORES = [
   'Bismuth',
@@ -58,10 +58,12 @@ export class AlloyMixerComponent implements OnInit {
       .map((ctrl) => ctrl.value)
       .filter((slotValue) => slotValue.ore && slotValue.unit);
 
-    const unitPerOre = _(slotsWithOre)
+    const unitPerOre = chain(slotsWithOre)
       .groupBy('ore')
-      .mapValues((oreUnitArray) => _.sumBy(oreUnitArray, 'unit'));
-    const allUnit = unitPerOre.values().sum();
-    return unitPerOre.mapValues((unit) => _.round(unit / allUnit, 2) * 100).value();
+      .mapValues((oreUnitArray) => sumBy(oreUnitArray, 'unit'));
+    const allUnit = unitPerOre.values().sum().value();
+    return unitPerOre
+      .mapValues((unit) => round(unit / allUnit, 2) * 100)
+      .value();
   }
 }
