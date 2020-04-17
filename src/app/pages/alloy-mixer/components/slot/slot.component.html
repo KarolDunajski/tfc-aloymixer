@@ -1,0 +1,15 @@
+<div nz-row>
+  <nz-select
+    [formControl]="oreSizeCtrl"
+    nzPlaceHolder="Select a size"
+  >
+    <nz-option
+      *ngFor="let option of options"
+      [nzValue]="option.value"
+      [nzLabel]="option.name"
+    ></nz-option>
+  </nz-select>
+
+  <nz-slider [formControl]="oreCountCtrl" [nzMax]="16" [nzTooltipVisible]="'always'"></nz-slider>
+  <h4>{{ val }}</h4>
+</div>

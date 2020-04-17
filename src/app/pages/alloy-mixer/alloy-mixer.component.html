@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup" *ngIf="formGroup">
+  <div formArrayName="vessel">
+    <div class="slot-with-ore" nz-row *ngFor="let slot of vessel.controls">
+      <ng-container [formGroup]="slot">
+        <nz-select [formControl]="slot.get('ore')" nzPlaceHolder="Select ore">
+          <nz-option
+            *ngFor="let ore of ores"
+            [nzValue]="ore"
+            [nzLabel]="ore"
+          ></nz-option>
+        </nz-select>
+        <app-slot [formControl]="slot.get('unit')"></app-slot>
+      </ng-container>
+    </div>
+  </div>
+</form>
+
+<table *ngIf="summary as s">
+  <tr *ngFor="let orePercentage of s | keyvalue">
+    <td>{{orePercentage.key}}</td>
+    <td>{{orePercentage.value}}%</td>
+  </tr>
+</table>
